@@ -34,3 +34,4 @@ Pasirinktos technologijos:
 - Serveris (angl. back-end) - ASP.NET Core su MySQL duomenų baze;
 - Sistema talpinama Microsoft Azure debesyje.
 ## Sistemos architektūra
+![Sistemos architektūra](Architektura.png)
