@@ -30,7 +30,7 @@ Administratorius sistemoje galės:
 
 ## Pasirinktų technologijų aprašymas
 Pasirinktos technologijos:
-- Klientas (angl. front-end) - React.js;
+- Klientas (angl. front-end) - React js;
 - Serveris (angl. back-end) - ASP.NET Core su MySQL duomenų baze;
 - Sistema talpinama Microsoft Azure debesyje.
 ## Sistemos architektūra
