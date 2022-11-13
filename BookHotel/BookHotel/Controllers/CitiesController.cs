@@ -3,6 +3,12 @@ using BookHotel.Data.Dtos.Cities;
 using BookHotel.Data.Entities;
 using BookHotel.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using BookHotel.Auth.Model;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
+
 
 namespace BookHotel.Controllers;
 [ApiController]
@@ -10,9 +16,16 @@ namespace BookHotel.Controllers;
 public class CitiesController : ControllerBase
 {
 	private readonly ICitiesRepository _citiesRepository;
-	public CitiesController(ICitiesRepository citiesRepository)
+	private readonly IRoomsRepository _roomsRepository;
+	private readonly IHotelsRepository _hotelsRepository;
+	private readonly IAuthorizationService _authorizationService;
+	public CitiesController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository, IRoomsRepository roomsRepository, IAuthorizationService authorizationService)
 	{
 		_citiesRepository = citiesRepository;
+		_roomsRepository = roomsRepository;
+		_hotelsRepository = hotelsRepository;
+		_authorizationService = authorizationService;
+
 	}
 
 	[HttpGet(Name = "GetCities")]
@@ -26,21 +39,21 @@ public class CitiesController : ControllerBase
 	{
 		var city = await _citiesRepository.GetAsync(cityId);
 
-		// 404
 		if (city == null)
 			return NotFound();
 
-		var links = CreateLinksForCity(cityId);
+		//var links = CreateLinksForCity(cityId);
 
 		var cityDto = new CityDto(city.Id, city.CityName, city.County);
-		return Ok(new { Resource =cityDto, Links = links });
+		return Ok(new { Resource =cityDto });
 	}
 
 	[HttpPost]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<CityDto>> Create(CreateCityDto createCityDto)
 	{
 		var city = new City
-		{ CityName = createCityDto.CityName, County = createCityDto.County};
+		{ CityName = createCityDto.CityName, County = createCityDto.County, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
 		await _citiesRepository.CreateAsync(city);
 
@@ -50,12 +63,18 @@ public class CitiesController : ControllerBase
 
 	[HttpPut]
 	[Route("{cityId}")]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<CityDto>> Update(int cityId, UpdateCityDto updateCityDto)
 	{
 		var city = await _citiesRepository.GetAsync(cityId);
 
 		if (city == null)
 			return NotFound();
+		var authorizationResult = await _authorizationService.AuthorizeAsync(User, city, PolicyNames.ResourceOwner);
+		if (!authorizationResult.Succeeded)
+		{
+			return Forbid();
+		}
 		city.CityName = updateCityDto.CityName;
 		city.County = updateCityDto.County;
 		await _citiesRepository.UpdateAsync(city);
@@ -67,19 +86,33 @@ public class CitiesController : ControllerBase
 	public async Task<ActionResult> Remove(int cityId)
 	{
 		var city = await _citiesRepository.GetAsync(cityId);
-
+		/*var hotel = await _hotelsRepository.GetManyAsync(cityId);
+		var room = await _hotelsRepository.GetManyAsync(cityId);*/
 		if (city == null)
 			return NotFound();
 
 		await _citiesRepository.DeleteAsync(city);
 
+		/*if(hotel!= null)
+		{
+			foreach (var h in hotel)
+			{
+				_hotelsRepository.DeleteAsync(h);
+			}
+		}
+		if (room != null)
+		{
+			foreach (var r in room)
+			{
+				_hotelsRepository.DeleteAsync(r);
+			}
+		}*/
+
+
+
+
 		return NoContent();
 	}
 
 
-	private IEnumerable<LinkDto> CreateLinksForCity(int cityId)
-	{
-		yield return new LinkDto { Href = Url.Link("GetCity", new { cityId }), Rel = "self", Method = "GET" };
-		yield return new LinkDto { Href = Url.Link("DeleteCity", new { cityId }), Rel = "delete_city", Method = "DELETE" };
-	}
 }

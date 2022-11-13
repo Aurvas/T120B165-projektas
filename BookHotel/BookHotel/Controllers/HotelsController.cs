@@ -4,6 +4,11 @@ using BookHotel.Data.Entities;
 using BookHotel.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
+using BookHotel.Auth.Model;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 
 namespace BookHotel.Controllers;
@@ -13,10 +18,12 @@ public class HotelsController : ControllerBase
 {
 	private readonly IHotelsRepository _hotelsRepository;
 	private readonly ICitiesRepository _citiesRepository;
-	public HotelsController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository)
+	private readonly IAuthorizationService _authorizationService;
+	public HotelsController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository, IAuthorizationService authorizationService)
 	{
 		_hotelsRepository = hotelsRepository;
 		_citiesRepository = citiesRepository;
+		_authorizationService = authorizationService;
 	}
 
 	[HttpGet(Name = "GetHotels")]
@@ -33,20 +40,21 @@ public class HotelsController : ControllerBase
 		if (hotel == null)
 			return NotFound();
 
-		var links = CreateLinksForHotel(cityId, hotelId);
+		//var links = CreateLinksForHotel(cityId, hotelId);
 
 		var hotelDto = new HotelDto(hotel.Id, hotel.Name, hotel.Address, hotel.Email, hotel.StarCount, hotel.CityId);
-		return Ok(new { Resource = hotelDto, Links = links });
+		return Ok(new { Resource = hotelDto });
 	}
 
 	[HttpPost]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<HotelDto>> Create(int cityId, CreateHotelDto createHotelDto)
 	{
 		var city = await _citiesRepository.GetAsync(cityId);
 		if(city == null) return NotFound($"Couldn't find a city with id of {cityId}");
 
 		var hotel = new Hotel
-		{ Name = createHotelDto.Name, Address = createHotelDto.Address, Email=createHotelDto.Email, StarCount=createHotelDto.StarCount, CityId=cityId };
+		{ Name = createHotelDto.Name, Address = createHotelDto.Address, Email=createHotelDto.Email ?? " ", StarCount=createHotelDto.StarCount, CityId=cityId, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
 		await _hotelsRepository.CreateAsync(hotel);
 
@@ -55,12 +63,21 @@ public class HotelsController : ControllerBase
 
 	[HttpPut]
 	[Route("{hotelId}")]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<HotelDto>> Update(int cityId, int hotelId, UpdateHotelDto updateHotelDto)
 	{
 		var hotel = await _hotelsRepository.GetAsync(cityId, hotelId);
 		if (hotel == null) return NotFound($"Couldn't find a hotel with id of {hotelId}");
+		var authorizationResult = await _authorizationService.AuthorizeAsync(User, hotel, PolicyNames.ResourceOwner);
+		if (!authorizationResult.Succeeded)
+		{
+			return Forbid();
+		}
+		if (updateHotelDto.Email!=null)
+			hotel.Email = updateHotelDto.Email;
+		if(updateHotelDto.StarCount != 0)
+			hotel.StarCount = updateHotelDto.StarCount;
 
-		hotel.Email = updateHotelDto.Email;
 		await _hotelsRepository.UpdateAsync(hotel);
 
 		return Ok(new HotelDto(hotel.Id, hotel.Name, hotel.Address, hotel.Email,hotel.StarCount, hotel.CityId));
@@ -80,9 +97,9 @@ public class HotelsController : ControllerBase
 	}
 
 
-	private IEnumerable<LinkDto> CreateLinksForHotel(int cityId, int hotelId)
+	/*private IEnumerable<LinkDto> CreateLinksForHotel(int cityId, int hotelId)
 	{
 		yield return new LinkDto { Href = Url.Link("GetHotel", new { cityId, hotelId }), Rel = "self", Method = "GET" };
 		yield return new LinkDto { Href = Url.Link("DeleteHotel", new { cityId, hotelId }), Rel = "delete_city", Method = "DELETE" };
-	}
+	}*/
 }

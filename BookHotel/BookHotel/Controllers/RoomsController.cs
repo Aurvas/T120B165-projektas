@@ -4,6 +4,12 @@ using BookHotel.Data.Entities;
 using BookHotel.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using BookHotel.Auth.Model;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
+
 
 
 namespace BookHotel.Controllers;
@@ -14,12 +20,14 @@ public class RoomsController : ControllerBase
 	private readonly IHotelsRepository _hotelsRepository;
 	private readonly ICitiesRepository _citiesRepository;
 	private readonly IRoomsRepository _roomsRepository;
+	private readonly IAuthorizationService _authorizationService;
 
-	public RoomsController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository, IRoomsRepository roomsRepository)
+	public RoomsController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository, IRoomsRepository roomsRepository, IAuthorizationService authorizationService)
 	{
 		_roomsRepository = roomsRepository;
 		_hotelsRepository = hotelsRepository;
 		_citiesRepository = citiesRepository;
+		_authorizationService = authorizationService;
 	}
 
 	[HttpGet(Name = "GetRooms")]
@@ -43,6 +51,7 @@ public class RoomsController : ControllerBase
 	}
 
 	[HttpPost]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<RoomDto>> Create(int cityId, int hotelId, CreateRoomDto createRoomDto)
 	{
 
@@ -50,7 +59,7 @@ public class RoomsController : ControllerBase
 		if (hotel == null) return NotFound($"Couldn't find a hotel with id of {hotelId}");
 
 		var room = new Room
-		{ Floor = createRoomDto.Floor, Number = createRoomDto.Number, Description = createRoomDto.Description, HotelId=hotelId, CityId = cityId };
+		{ Floor = createRoomDto.Floor, Number = createRoomDto.Number, Description = createRoomDto.Description, HotelId=hotelId, CityId = cityId, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
 		await _roomsRepository.CreateAsync(room);
 
@@ -59,11 +68,16 @@ public class RoomsController : ControllerBase
 
 	[HttpPut]
 	[Route("{roomId}")]
+	[Authorize(Roles = BookHotelRoles.BookHotelUser)]
 	public async Task<ActionResult<RoomDto>> Update(int cityId, int hotelId, int roomId, UpdateRoomDto updateRoomDto)
 	{
 		var room = await _roomsRepository.GetAsync(cityId, hotelId, roomId);
 		if (room == null) return NotFound($"Couldn't find a room with id of {roomId}");
-
+		var authorizationResult = await _authorizationService.AuthorizeAsync(User, room, PolicyNames.ResourceOwner);
+		if (!authorizationResult.Succeeded)
+		{
+			return Forbid();
+		}
 		room.Description = updateRoomDto.Description;
 		await _roomsRepository.UpdateAsync(room);
 

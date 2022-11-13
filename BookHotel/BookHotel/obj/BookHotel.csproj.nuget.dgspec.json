@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\helta\\OneDrive\\Desktop\\LD1\\BookHotel\\BookHotel\\BookHotel.csproj": {}
+    "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\BookHotel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\helta\\OneDrive\\Desktop\\LD1\\BookHotel\\BookHotel\\BookHotel.csproj": {
+    "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\BookHotel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\helta\\OneDrive\\Desktop\\LD1\\BookHotel\\BookHotel\\BookHotel.csproj",
+        "projectUniqueName": "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\BookHotel.csproj",
         "projectName": "BookHotel",
-        "projectPath": "C:\\Users\\helta\\OneDrive\\Desktop\\LD1\\BookHotel\\BookHotel\\BookHotel.csproj",
+        "projectPath": "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\BookHotel.csproj",
         "packagesPath": "C:\\Users\\helta\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\helta\\OneDrive\\Desktop\\LD1\\BookHotel\\BookHotel\\obj\\",
+        "outputPath": "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -43,6 +43,22 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.11, )"
+            },
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.11, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
