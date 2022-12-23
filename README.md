@@ -1,6 +1,6 @@
 # T120B165-projektas BookHotel
 
--[Funkciniai reikalavimai](ĘFunkciniai reikalavimai)
+-[Funkciniai reikalavimai](#Funkciniai reikalavimai)
 ## Sprendžiamo uždavinio aprašymas
 ### Sistemos paskirtis
 Kuriamos sistemos paskirtis - bendra viešbučių platforma, leidžianti klientams lengviau susirasti ir rezervuotis tinkamą viešbučio numerį.
