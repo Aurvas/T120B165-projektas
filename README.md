@@ -341,5 +341,260 @@ Jei nėra miesto
 ```
 Couldn't find a city with id of 100
 ```
+**DELETE /api/cities/id/hotels/id**  
+Panaikina miesto viešbutį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 204  | Elementas pašalintas | 
+| 401 403 | Nėra leidimo | 
+| 404  | Nerasta | 
+
+Užklausos pavyzdys  
+DELETE [domenas]/api/cities/1/hotels/8   
+Atsakymas: 204 - pašalinta arba 404 - nėra leidimo  
+Jei nerasta
+```
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-1af93bbc4ffa3c6605bacefcb7a57688-dd0eaa470787b7f0-00"
+}
+```
+**PUT /api/cities/id/hotels/id**  
+Redaguoja miesto viešbutį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| Email  | Elektroninis paštas  | Ne |  
+| StarCount | Žvaigždučių skaičius | Ne |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Atnaujina elementą | 
+| 401 403 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+PUT [domenas]/api/cities/1/hotels/8  
+Parametrai  
+```
+{
+    "Email": "apeters0@blog.com"
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 8,
+    "name": "Aivee",
+    "address": "71204 Menomonie Parkway",
+    "email": "apeters0@blog.com",
+    "starCount": 5,
+    "cityId": 1
+}
+```
+**Numeriai**  
+**GET /api/cities/id/hotels/id/rooms**  
+Grąžina visus tam tikro miesto ir viešbučio numerius  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina sąrašą  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities/1/hotels/1/rooms  
+Užklausos atsakymas  
+```
+[
+    {
+        "id": 1,
+        "floor": 1,
+        "number": "001",
+        "description": "Standartinis vienvietis numeris",
+        "hotelId": 1,
+        "cityId": 1
+    },
+    {
+        "id": 2,
+        "floor": 1,
+        "number": "002",
+        "description": "Prabangus dvivietis numeris",
+        "hotelId": 1,
+        "cityId": 1
+    }
+]
+```
+Jei nėra
+```
+[]
+```
+**GET /api/cities/id/hotels/id/rooms/id**  
+Grąžina tam tikro miesto ir viešbučio numerį 
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina elementą  | 
+| 404  | Nerasta  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities/1/hotels/1/rooms/1  
+Užklausos atsakymas  
+```
+{
+    "resource": {
+        "id": 1,
+        "floor": 1,
+        "number": "001",
+        "description": "Standartinis vienvietis numeris",
+        "hotelId": 1,
+        "cityId": 1
+    }
+}
+```  
+Jei nerasta  
+```  
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-8121d6c4369f145ed5d6cc461cca7d78-b712a445aef222f7-00"
+}
+```  
+**POST /api/cities/id/hotels/id/rooms**  
+Sukuria naują tam tikro miesto ir viešbučio numerį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- | 
+| Floor | Aukštas | Taip |
+| Number | Kambario numeris | Taip |
+| Description | Kambario aprašymas | Taip |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 201  | Sukuria elementą | 
+| 401 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+POST [domenas]/api/cities/1/hotels/1/rooms  
+Parametrai  
+```
+{
+    "Floor": 1,
+    "Number": "001",
+    "Description": "Prabangus dvivietis numeris"
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 7,
+    "floor": 1,
+    "number": "001",
+    "description": "Prabangus dvivietis numeris",
+    "hotelId": 1,
+    "cityId": 1
+}
+```
+Jei nėra viešbučio
+```
+Couldn't find a hotel with id of 100
+```
+**DELETE /api/cities/id/hotels/id/rooms/id**  
+Panaikina tam tikro miesto ir viešbučio numerį
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 204  | Elementas pašalintas | 
+| 401 403 | Nėra leidimo | 
+| 404  | Nerasta | 
+
+Užklausos pavyzdys  
+DELETE [domenas]/api/cities/1/hotels/1/rooms/7   
+Atsakymas: 204 - pašalinta arba 404 - nėra leidimo  
+Jei nerasta
+```
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-1af93bbc4ffa3c6605bacefcb7a57688-dd0eaa470787b7f0-00"
+}
+```
+**PUT /api/cities/id/hotels/id/rooms/id**  
+Redaguoja tam tikro miesto ir viešbučio numerį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| Description  | Kambario aprašymas  | Taip |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Atnaujina elementą | 
+| 401 403 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+PUT [domenas]/api/cities/1/hotels/1/rooms/7  
+Parametrai  
+```
+{
+    "Description": "Standartinis vienvietis numeris"
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 7,
+    "floor": 1,
+    "number": "001",
+    "description": "Standartinis vienvietis numeris",
+    "hotelId": 1,
+    "cityId": 1
+}
+```
 ## Išvados
 
