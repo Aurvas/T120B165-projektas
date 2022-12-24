@@ -40,6 +40,9 @@ Pasirinktos technologijos:
 ## Sistemos architektūra
 ![Sistemos architektūra](Architektura.png)
 ## Naudotojo sąsajos projektas
+| Wireframe  | Realizacija |
+| ------------- | ------------- |
+| Content-Type  | (HomeRealization.png)  |  
 
 ## API specifikacija
 **Miestai**  
