@@ -42,6 +42,179 @@ Pasirinktos technologijos:
 ## Naudotojo sąsajos projektas
 
 ## API specifikacija
+**Miestai**  
+**GET /api/cities**  
+Grąžina visus miestus  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
 
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina sąrašą  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities  
+Užklausos atsakymas  
+```
+[
+    {
+        "id": 1,
+        "cityName": "Telšiai",
+        "county": "Telsiu r.",
+        "imageUrl": " "
+    },
+    {
+        "id": 2,
+        "cityName": "Kaunas",
+        "county": "Kauno m.",
+        "imageUrl": "https://luxexpress.fra1.cdn.digitaloceanspaces.com/files/k%C4%85%20veikti%20kaune(1).jpg"
+    }
+}
+```  
+**GET /api/cities/id**  
+Grąžina miestą  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina elementą  | 
+| 404  | Nerasta  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities/1  
+Užklausos atsakymas  
+```
+{
+    "resource": {
+        "id": 1,
+        "cityName": "Telšiai",
+        "county": "Telsiu r.",
+        "imageUrl": " "
+    }
+}
+```  
+Jei nerasta  
+```  
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-8121d6c4369f145ed5d6cc461cca7d78-b712a445aef222f7-00"
+}
+```  
+**POST /api/cities**  
+Sukuria naują miestą  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| CityName  | Miesto pavadinimas  | Taip |  
+| County | Rajono pavadinimas | Taip |
+| ImageUrl | Nuotraukos URL adresas | Ne |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 201  | Sukuria elementą | 
+| 401 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+POST [domenas]/api/cities  
+Parametrai  
+```
+{
+    "CityName": "Mažeikiai",
+    "County": "Mažeikių r."
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 9,
+    "cityName": "Mažeikiai",
+    "county": "Mažeikių r.",
+    "imageUrl": " "
+}
+```  
+
+**DELETE /api/cities/id**  
+Panaikina miestą  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 204  | Elementas pašalintas | 
+| 401 | Nėra leidimo | 
+| 404  | Nerasta | 
+
+Užklausos pavyzdys  
+DELETE [domenas]/api/cities/9   
+Atsakymas: 204 - pašalinta arba 404 - nėra leidimo  
+Jei nerasta
+```
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-1af93bbc4ffa3c6605bacefcb7a57688-dd0eaa470787b7f0-00"
+}
+```
+
+**PUT /api/cities/id**  
+Redaguoja miestą  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| CityName  | Miesto pavadinimas  | Taip |  
+| County | Rajono pavadinimas | Taip |
+| ImageUrl | Nuotraukos URL adresas | Ne |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Atnaujina elementą | 
+| 401 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+PUT [domenas]/api/cities/3  
+Parametrai  
+```
+{
+    "County": "Vilniaus m."
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 3,
+    "cityName": "Vilnius",
+    "county": "Vilniaus m.",
+    "imageUrl": " "
+}
+```  
 ## Išvados
 
