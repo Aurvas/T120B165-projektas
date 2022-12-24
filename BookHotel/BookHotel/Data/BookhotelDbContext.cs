@@ -20,6 +20,6 @@ public class BookhotelDbContext : IdentityDbContext<BookHotelRestUser>
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		optionsBuilder.UseMySQL("server=bookhoteldb.mysql.database.azure.com;port=3306;user=bookhoteladmin;password=Vistamusis156;database=bookhoteldb");
+		optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=Aurvas189;database=bookhoteldb");
 	}
 }

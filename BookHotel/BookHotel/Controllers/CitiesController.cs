@@ -31,7 +31,7 @@ public class CitiesController : ControllerBase
 	[HttpGet(Name = "GetCities")]
 	public async Task<IEnumerable<CityDto>> GetManyAsync()
 	{
-		return (await _citiesRepository.GetManyAsync()).Select(o => new CityDto(o.Id, o.CityName, o.County));
+		return (await _citiesRepository.GetManyAsync()).Select(o => new CityDto(o.Id, o.CityName, o.County, o.ImageUrl));
 	}
 
 	[HttpGet("{cityId}", Name = "GetCity")]
@@ -44,7 +44,7 @@ public class CitiesController : ControllerBase
 
 		//var links = CreateLinksForCity(cityId);
 
-		var cityDto = new CityDto(city.Id, city.CityName, city.County);
+		var cityDto = new CityDto(city.Id, city.CityName, city.County, city.ImageUrl);
 		return Ok(new { Resource =cityDto });
 	}
 
@@ -53,11 +53,11 @@ public class CitiesController : ControllerBase
 	public async Task<ActionResult<CityDto>> Create(CreateCityDto createCityDto)
 	{
 		var city = new City
-		{ CityName = createCityDto.CityName, County = createCityDto.County, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
+		{ CityName = createCityDto.CityName, County = createCityDto.County, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub), ImageUrl = createCityDto.ImageUrl ?? " " };
 
 		await _citiesRepository.CreateAsync(city);
 
-		return Created("", new CityDto(city.Id, city.CityName, city.County));
+		return Created("", new CityDto(city.Id, city.CityName, city.County, city.ImageUrl));
 
 	}
 
@@ -71,15 +71,17 @@ public class CitiesController : ControllerBase
 		if (city == null)
 			return NotFound();
 		var authorizationResult = await _authorizationService.AuthorizeAsync(User, city, PolicyNames.ResourceOwner);
+		Console.WriteLine(city.CityName);
 		if (!authorizationResult.Succeeded)
 		{
 			return Forbid();
 		}
-		city.CityName = updateCityDto.CityName;
-		city.County = updateCityDto.County;
+		city.CityName = updateCityDto.CityName ?? city.CityName;
+		city.County = updateCityDto.County ?? city.County;
+		city.ImageUrl = updateCityDto.ImageUrl ?? city.ImageUrl;
 		await _citiesRepository.UpdateAsync(city);
 
-		return Ok(new CityDto(city.Id, city.CityName, city.County));
+		return Ok(new CityDto(city.Id, city.CityName, city.County, city.ImageUrl));
 	}
 
 	[HttpDelete("{cityId}", Name = "DeleteCity")]

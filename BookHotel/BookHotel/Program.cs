@@ -6,13 +6,23 @@ using BookHotel.Auth.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BookHotel.Auth;
 using System.IdentityModel.Tokens.Jwt;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(name: MyAllowSpecificOrigins,
+					  policy =>
+					  {
+						  policy.WithOrigins("http://localhost:3000").AllowAnyHeader();
+					  });
+});
 builder.Services.AddControllers();
 
 builder.Services.AddIdentity<BookHotelRestUser, IdentityRole>()
@@ -60,6 +70,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 
