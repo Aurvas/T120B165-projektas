@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YY+nDyZ15nuZf+lBzZVOlwdhbaGyoxbGUqYdUkLPifENMo4WWhr74N0yoswm1fvVeKxRqh0CfzuwqOAl6IBO1Q==",
+  "dgSpecHash": "OYg5FPu873obtgbBBPukVZZ2jxyPyjc5jC00igvYZJ2rRQcQu2MFBSDJ1EtDOUotiP3Vk5zWRjXtx8YlZtGy/w==",
   "success": true,
   "projectFilePath": "C:\\Users\\helta\\OneDrive\\Documents\\GitHub\\T120B165-projektas\\BookHotel\\BookHotel\\BookHotel.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.11\\microsoft.aspnetcore.authentication.jwtbearer.6.0.11.nupkg.sha512",
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.0\\microsoft.aspnetcore.authorization.7.0.0.nupkg.sha512",
+    "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.11\\microsoft.aspnetcore.cryptography.internal.6.0.11.nupkg.sha512",
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.11\\microsoft.aspnetcore.cryptography.keyderivation.6.0.11.nupkg.sha512",
     "C:\\Users\\helta\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

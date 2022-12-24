@@ -19,6 +19,7 @@ public class HotelsController : ControllerBase
 	private readonly IHotelsRepository _hotelsRepository;
 	private readonly ICitiesRepository _citiesRepository;
 	private readonly IAuthorizationService _authorizationService;
+	private readonly IAuthorizationHandler _authorizationHandler;
 	public HotelsController(ICitiesRepository citiesRepository, IHotelsRepository hotelsRepository, IAuthorizationService authorizationService)
 	{
 		_hotelsRepository = hotelsRepository;
@@ -67,10 +68,16 @@ public class HotelsController : ControllerBase
 	public async Task<ActionResult<HotelDto>> Update(int cityId, int hotelId, UpdateHotelDto updateHotelDto)
 	{
 		var hotel = await _hotelsRepository.GetAsync(cityId, hotelId);
+		
 		if (hotel == null) return NotFound($"Couldn't find a hotel with id of {hotelId}");
 		var authorizationResult = await _authorizationService.AuthorizeAsync(User, hotel, PolicyNames.ResourceOwner);
+		
+		Console.WriteLine(authorizationResult.Succeeded);
+		
+		
 		if (!authorizationResult.Succeeded)
 		{
+			
 			return Forbid();
 		}
 		if (updateHotelDto.Email!=null)

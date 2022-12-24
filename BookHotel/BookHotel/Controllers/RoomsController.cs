@@ -47,7 +47,7 @@ public class RoomsController : ControllerBase
 		var links = CreateLinksForRoom(cityId, hotelId, roomId);
 
 		var roomDto = new RoomDto(room.Id, room.Floor, room.Number, room.Description, room.HotelId, room.CityId);
-		return Ok(new { Resource = roomDto, Links = links });
+		return Ok(new { Resource = roomDto });
 	}
 
 	[HttpPost]
@@ -74,6 +74,7 @@ public class RoomsController : ControllerBase
 		var room = await _roomsRepository.GetAsync(cityId, hotelId, roomId);
 		if (room == null) return NotFound($"Couldn't find a room with id of {roomId}");
 		var authorizationResult = await _authorizationService.AuthorizeAsync(User, room, PolicyNames.ResourceOwner);
+		
 		if (!authorizationResult.Succeeded)
 		{
 			return Forbid();

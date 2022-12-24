@@ -8,6 +8,7 @@ namespace BookHotel.Data.Entities
 	{
 		public int Id { get; set; }
 		public string CityName { get; set; }
+		public string ImageUrl { get; set; }
 		public string County { get; set; }
 		[Required]
 		public string UserId { get; set; }
