@@ -216,5 +216,130 @@ Užklausos atsakymas
     "imageUrl": " "
 }
 ```  
+**Viešbučiai**  
+**GET /api/cities/id/hotels**  
+Grąžina visus miesto viešbučius  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina sąrašą  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities/1/hotels  
+Užklausos atsakymas  
+```
+[
+    {
+        "id": 1,
+        "name": "Oyope",
+        "address": "097 Prairieview Point",
+        "email": " ",
+        "starCount": 4,
+        "cityId": 1
+    },
+    {
+        "id": 2,
+        "name": "Quinu",
+        "address": "03916 High Crossing Road",
+        "email": "ccraufordc@squidoo.com",
+        "starCount": 3,
+        "cityId": 1
+    }
+]
+```
+Jei nėra
+```
+[]
+```
+**GET /api/cities/id/hotels/id**  
+Grąžina miesto viešbutį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Grąžina elementą  | 
+| 404  | Nerasta  | 
+
+Užklausos pavyzdys  
+GET [domenas]/api/cities/1/hotels/1  
+Užklausos atsakymas  
+```
+{
+    "resource": {
+        "id": 1,
+        "name": "Oyope",
+        "address": "097 Prairieview Point",
+        "email": " ",
+        "starCount": 4,
+        "cityId": 1
+    }
+}
+```  
+Jei nerasta  
+```  
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+    "title": "Not Found",
+    "status": 404,
+    "traceId": "00-8121d6c4369f145ed5d6cc461cca7d78-b712a445aef222f7-00"
+}
+```  
+**POST /api/cities/id/hotels**  
+Sukuria naują miesto viešbutį  
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+| Authorization | JWT access token |
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| Name  | Viešbučio pavadinimas  | Taip |  
+| Address | Viešbučio adresas | Taip |
+| Email | Elektroninis paštas | Ne |
+| StarCount | Žvaigždučių skaičius | Taip |
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 201  | Sukuria elementą | 
+| 401 | Nėra leidimo |
+| 404 | Nerasta |
+
+Užklausos pavyzdys  
+POST [domenas]/api/cities/1/hotels  
+Parametrai  
+```
+{
+    "Name": "Aivee",
+    "Address": "71204 Menomonie Parkway",
+    "StarCount": 5
+}
+```
+Užklausos atsakymas  
+```
+{
+    "id": 8,
+    "name": "Aivee",
+    "address": "71204 Menomonie Parkway",
+    "email": " ",
+    "starCount": 5,
+    "cityId": 1
+}
+```
+Jei nėra miesto
+```
+Couldn't find a city with id of 100
+```
 ## Išvados
 
