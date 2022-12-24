@@ -596,5 +596,77 @@ Užklausos atsakymas
     "cityId": 1
 }
 ```
+**Registracija**  
+**POST /api/register*  
+
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| UserName  | Slapyvardis  | Taip |  
+| Email  | Elektroninis paštas  | Taip |  
+| Password  | Slaptažodis  | Taip |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 201  | Naudotojas užregistruotas | 
+| 400 | Neteisingi duomenys |
+
+Užklausos pavyzdys
+POST [domenas]/api/register
+```
+{
+    "UserName": "vardenis10",
+    "Email": "vardenis10@gmai.com",
+    "Password": "Vardenis10!"
+}
+```
+Užklausos atsakymas
+```
+{
+    "id": "2d26be5d-bc44-48dc-b8e9-fa1761010c0e",
+    "userName": "vardenis10",
+    "email": "vardenis10@gmai.com"
+}
+```
+**Prisijungimas**  
+**POST /api/login*  
+
+Reikalaujamos siuntimo antraštės
+| Antraštė  | Reikšmė |
+| ------------- | ------------- |
+| Content-Type  | application/json  |  
+
+Parametrai  
+| Parametras  | Reikšmė | Būtina |
+| ------------- | ------------- | ------------- |
+| UserName  | Slapyvardis  | Taip |  
+| Password  | Slaptažodis  | Taip |  
+
+Atsako kodai  
+| Atsako kodas  | Reikšmė |
+| ------------- | ------------- |
+| 200  | Naudotojas prisijungė | 
+| 400 | Neteisingi duomenys |
+
+Užklausos pavyzdys
+POST [domenas]/api/login
+```
+{
+    "userName": "Vardenis10",
+    "password": "Vardenis10!"
+}
+```
+Užklausos atsakymas
+```
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidmFyZGVuaXMxMCIsImp0aSI6Ijg2YTZiYzljLWIwMDktNGU5OS04MWQ4LTI4NjgyMTY1NDVjMyIsInN1YiI6IjJkMjZiZTVkLWJjNDQtNDhkYy1iOGU5LWZhMTc2MTAxMGMwZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkJvb2tIb3RlbFVzZXIiLCJleHAiOjE2NzE5MDA1MzYsImlzcyI6IkF1cmltYXMiLCJhdWQiOiJUcnVzdGVkQ2xpZW50In0.NphK_pvlS14Fy_YEjtLgym3HYBcBLQm4HFo_Wms3feI"
+}
+```
 ## Išvados
 
