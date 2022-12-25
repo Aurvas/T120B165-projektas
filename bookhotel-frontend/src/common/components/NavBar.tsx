@@ -18,11 +18,11 @@ import {
   MantineSize,
 } from '@mantine/core';
 import React, { useContext, useState } from 'react';
-import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
+import { MdWeb } from 'react-icons/md';
+import {FaCity} from 'react-icons/fa';
 import { HiQrcode, HiCreditCard } from 'react-icons/hi';
 import { UserContextType } from '../../authentication/models/User';
 import { AuthContext } from '../../authentication/context/AuthContext';
-import { AiFillCaretDown, AiOutlineEdit, AiOutlineCreditCard, AiOutlineShoppingCart } from 'react-icons/ai';
 
 const NavButton = ({
   to,
@@ -101,8 +101,8 @@ const NavBar = () => {
         <Card shadow="md" radius="lg" p="md" withBorder>
           <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
             <Group position="apart">
-              <NavButton to="/" color="#1971C2" title="Pagrindinis" icon={<MdOutlineMasks />} />
-              <NavButton to="/cities" color="#1971C2" title="Miestai" icon={<MdOutlineMap />} />
+              <NavButton to="/" color="#1971C2" title="Pagrindinis" icon={<MdWeb />} />
+              <NavButton to="/cities" color="#1971C2" title="Miestai" icon={ <FaCity/>} />
               {!user ? (
                 <Group>
                   <NavButton to="/login" color="#1971C2" title="Prisijungti" />
@@ -134,14 +134,14 @@ const NavBar = () => {
                           to="/"
                           color="green"
                           title="Pagrindinis"
-                          icon={<MdOutlineMasks />}
+                          icon={<MdWeb />}
                         />
                         <NavButton
                           size={'sm'}
                           to="/cities"
                           color="green"
                           title="Miestai"
-                          icon={<MdOutlineMap />}
+                          icon={<FaCity />}
                         />
                       </Stack>
                     )}
