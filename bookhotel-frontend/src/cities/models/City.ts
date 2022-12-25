@@ -1,12 +1,12 @@
 export default class City {
   id: string;
-  cityName: string;
   county: string;
+  cityName: string;
   imageUrl: string;
 
   constructor(dto: any) {
     this.id = dto._id;
-    this.cityName = dto.cityNname;
+    this.cityName = dto.cityName;
     this.county = dto.county;
     this.imageUrl = dto.imageUrl ?? '';
   }

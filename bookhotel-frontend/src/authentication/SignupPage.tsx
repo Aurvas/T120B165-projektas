@@ -90,7 +90,7 @@ const SignupPage = () => {
             />
             <Button
               variant="outline"
-              color="lime"
+              color="#1971C2"
               radius="xl"
               size="md"
               style={{ marginTop: 20 }}
@@ -99,10 +99,6 @@ const SignupPage = () => {
               Registruotis
             </Button>
             <Space h="xs" />
-            <Text>
-              Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
-            </Text>
-            <Space h="md" />
             {isError && (
               <Alert icon={<FiAlertTriangle />} title="Kažkas nepavyko!" color="red" radius="md">
                 {error?.response.data.message}

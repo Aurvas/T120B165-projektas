@@ -65,7 +65,7 @@ const LoginPage = () => {
             />
             <Button
               variant="outline"
-              color="lime"
+              color="#1971C2"
               radius="xl"
               size="md"
               style={{ marginTop: 20 }}

@@ -16,6 +16,7 @@ import City from '../models/City';
 import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../authentication/context/AuthContext';
 import { UserContextType } from '../../authentication/models/User';
+import {GiModernCity} from 'react-icons/gi';
 import { API_URL } from '../../common/constants';
 
 const CityBox = ({ city }: { city: City }) => {
@@ -23,6 +24,8 @@ const CityBox = ({ city }: { city: City }) => {
   const handlers = useRef<NumberInputHandlers>();
   const userIsAdmin = user?.roles === 'Admin';
   const theme = useMantineTheme();
+  console.log(city);
+  
 
   return (
     <Card
@@ -37,7 +40,7 @@ const CityBox = ({ city }: { city: City }) => {
       withBorder
     >
       <Card.Section>
-        <Image radius="sm" height={220} src={city.imageUrl ? `${city.imageUrl}` : './city.jpeg'} />
+        <Image radius="sm" height={220} src={city.imageUrl.length > 10 ? `${city.imageUrl}`:"https://icon-library.com/images/city-icon/city-icon-23.jpg"} />
       </Card.Section>
       <Space h="xs" />
       <Group position="apart">
@@ -45,17 +48,23 @@ const CityBox = ({ city }: { city: City }) => {
       </Group>
       <Space h={5} />
       <Text size="md" style={{ color: theme.colors.dark[1] }}>
-        {city.cityName}
+        {city.county}
       </Text>
       <Space h="xs" />
-      <Text>Pirkti</Text>
 
       <Button
         variant="light"
         color="blue"
         fullWidth
         style={{ marginTop: 14 }}>
-        Pridėti į krepšelį
+        Redaguoti
+      </Button>
+	  <Button
+        variant="light"
+        color="red"
+        fullWidth
+        style={{ marginTop: 14 }}>
+        Šalinti
       </Button>
     </Card>
   );
