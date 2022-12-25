@@ -46,7 +46,7 @@ Pasirinktos technologijos:
 |  |![](LoginRealization.png) |
 |  |![](RegisterRealization.png) |
 |  |![](CitiesRealization.png) |
-|  |![](EditCityRealization.png) |
+|  |![](AddCityRealization.png) |
 
 ## API specifikacija
 **Miestai**  
