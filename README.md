@@ -42,7 +42,11 @@ Pasirinktos technologijos:
 ## Naudotojo sąsajos projektas
 | Wireframe  | Realizacija |
 | ------------- | ------------- |
-| Content-Type  | (HomeRealization.png)  |  
+|   | ![](HomeRealization.png)  |  
+|  |![](LoginRealization.png) |
+|  |![](RegisterRealization.png) |
+|  |![](CitiesRealization.png) |
+|  |![](EditCityRealization.png) |
 
 ## API specifikacija
 **Miestai**  
