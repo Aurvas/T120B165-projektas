@@ -42,11 +42,14 @@ Pasirinktos technologijos:
 ## Naudotojo sąsajos projektas
 | Wireframe  | Realizacija |
 | ------------- | ------------- |
-|   | ![](HomeRealization.png)  |  
-|  |![](LoginRealization.png) |
-|  |![](RegisterRealization.png) |
-|  |![](CitiesRealization.png) |
-|  |![](AddCityRealization.png) |
+| ![](HomeWireframe.png)   | ![](HomeRealization.png)  |  
+| ![](LoginWireframe.png)  |![](LoginRealization.png) |
+| ![](RegisterWireframe.png)  |![](RegisterRealization.png) |
+| ![](CitiesWireframe.png)  |![](CitiesRealization.png) |
+| ![](AddCityWireframe.png)  |![](AddCityRealization.png) |
+
+Viešbučių ir numerių redagavimo ir pridėjimo formos tokios pačios kaip ir miesto, tik skiriasi laukelių skaičius.  
+Viešbučių ir numerių atvaizdavimo forma tokia pati.  
 
 ## API specifikacija
 **Miestai**  
@@ -676,4 +679,4 @@ Užklausos atsakymas
 }
 ```
 ## Išvados
-
+Panaudoti įrankiai sukurti šiai sistemai yra populiarūs, todėl buvo galima lengvai rasti sprendimų į iškylančias problemas. Naudotojo sąsajai kurti panaudotas react labai padėjo kurti sąsają dėl to, nes buvo galima rasti daug bibliotekų, kurios palengvina kurti elementus. Projektui pilnai įgyvendinti neleido tai, kad baigėsi Azure debesijos paslausgos kreditų kiekis, todėl projektą teko baigti be debesų paslaugos.
